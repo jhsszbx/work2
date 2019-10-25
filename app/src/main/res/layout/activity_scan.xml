@@ -12,6 +12,7 @@
         app:zxing_framing_rect_height="250dp"
         app:zxing_framing_rect_width="250dp"
         app:zxing_preview_scaling_strategy="fitXY"
+
         app:zxing_use_texture_view="true" />
 
 </RelativeLayout>

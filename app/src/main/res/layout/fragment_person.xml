@@ -310,18 +310,25 @@
             </LinearLayout>
         </LinearLayout>
 
-        <Button
-            android:id="@+id/person_scan"
-            android:text="管理员打开门禁"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:ignore="MissingConstraints" />
-        <Button
-            android:id="@+id/person_scan_zxing"
-            android:text="zxing自带扫描管理员打开门禁"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:ignore="MissingConstraints" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/person_scan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="管理员打开门禁"
+                tools:ignore="MissingConstraints" />
+
+            <Button
+                android:id="@+id/person_scan_zxing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="zxing自带扫描管理员打开门禁"
+                tools:ignore="MissingConstraints" />
+        </LinearLayout>
 
     </LinearLayout>
 

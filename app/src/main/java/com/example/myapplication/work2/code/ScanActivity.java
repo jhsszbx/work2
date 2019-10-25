@@ -18,19 +18,19 @@ public class ScanActivity extends AppCompatActivity implements DecoratedBarcodeV
 
     private DecoratedBarcodeView decoratedBarcodeView;
     private CaptureManager captureManager;
-    private TextView textView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
 
+        init();
+
         //重要代码，初始化捕获
         captureManager = new CaptureManager(this, decoratedBarcodeView);
         captureManager.initializeFromIntent(getIntent(), savedInstanceState);
         captureManager.decode();
 
-        init();
     }
 
     private void init() {
@@ -81,23 +81,22 @@ public class ScanActivity extends AppCompatActivity implements DecoratedBarcodeV
         return decoratedBarcodeView.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        //扫码结果
-        IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        String userPhone = intentResult.getContents();
-//        onClick_retrofit_get0(userPhone);
-
-
-        if (intentResult != null) {
-            if (intentResult.getContents() == null) {
-                //扫码失败
-            } else {
-                String result = intentResult.getContents();//返回值
-                textView.setText("扫码结果：" + result);
-            }
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        //扫码结果
+//        IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+//        String userPhone = intentResult.getContents();
+////        onClick_retrofit_get0(userPhone);
+//
+//
+//        if (intentResult != null) {
+//            if (intentResult.getContents() == null) {
+//                //扫码失败
+//            } else {
+//                String result = intentResult.getContents();//返回值
+//            }
+//        }
+//    }
 }
