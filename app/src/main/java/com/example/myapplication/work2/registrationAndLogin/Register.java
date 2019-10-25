@@ -1,8 +1,9 @@
-package com.example.myapplication.work2;
+package com.example.myapplication.work2.registrationAndLogin;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,6 +16,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
+import com.example.myapplication.work2.HomeService;
+import com.example.myapplication.work2.MainActivity;
+import com.example.myapplication.work2.R;
 import com.example.myapplication.work2.table.User;
 import com.mob.MobSDK;
 
@@ -31,11 +35,14 @@ import static android.support.constraint.Constraints.TAG;
 public class Register extends AppCompatActivity implements View.OnClickListener {
 
     private EditText etPhoneNumber;        // 电话号码
-    private Button sendVerificationCode;   // 发送验证码
     private EditText etVerificationCode;   // 验证码
+    private EditText etUserPassword;       // 用户密码
+
+    private Button sendVerificationCode;   // 发送验证码
     private Button nextStep;               // 下一步
 
     private String phoneNumber;         // 电话号码
+    private String userPassword;        // 用户密码
     private String verificationCode;    // 验证码
 
     private boolean flag;   // 操作是否成功
@@ -75,6 +82,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
     }
 
+
     private void initToolbar() {
         // Toolbar 结束返回上级
         toolbar = findViewById(R.id.register_toolbar);
@@ -95,12 +103,13 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         etPhoneNumber = (EditText) findViewById(R.id.edit_phone_number);
         sendVerificationCode = (Button) findViewById(R.id.btn_send_verification_code);
         etVerificationCode = (EditText) findViewById(R.id.edit_verification_code);
+        etUserPassword = findViewById(R.id.edit_password_number);
         nextStep = (Button) findViewById(R.id.btn_next_step);
         sendVerificationCode.setOnClickListener(this);
         nextStep.setOnClickListener(this);
     }
 
-    public void onClick_retrofit_get0(String phoneNumber) {
+    public void onClick_addUserPhone(String userPhone, String userPassword) {
         //step1:实例化Retrofit对象
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(HomeService.BASE_URL)
@@ -111,7 +120,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         HomeService apiService = retrofit.create(HomeService.class);
 
         //step3:通过apiService调用call  http://gank.io/api/data/Android/10/1
-        final Call<User> gankCall= apiService.addUserPhone(phoneNumber);
+        final Call<User> gankCall= apiService.addUserPhone(userPhone, userPassword);
         Log.d("CallGoods",gankCall + "");
 
         //step4:通过异步获取数据
@@ -123,6 +132,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                 Log.d("111111", "onResponse: "+ response.body());
 
                 User user = response.body();
+
                 Log.d("Goodsgoods",user + "");
                 Log.d("Name",""+user.getUserPhone());
             }
@@ -193,11 +203,12 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                     // 校验验证码，返回校验的手机和国家代码
                     Toast.makeText(Register.this, "验证成功", Toast.LENGTH_SHORT).show();
                     phoneNumber = etPhoneNumber.getText().toString();
-                    onClick_retrofit_get0(phoneNumber);
-
+                    userPassword = etUserPassword.getText().toString();
+                    onClick_addUserPhone(phoneNumber, userPassword);
 
                     Intent intent = new Intent(Register.this, MainActivity.class);
                     startActivity(intent);
+
                 } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
                     // 获取验证码成功，true为智能验证，false为普通下发短信
                     Toast.makeText(Register.this, "验证码已发送", Toast.LENGTH_SHORT).show();

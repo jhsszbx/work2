@@ -5,6 +5,8 @@ public class User {
 
     private String userPhone;
 
+    private String userPassword;
+
     private String userName;
 
     private String userGender;
@@ -14,6 +16,10 @@ public class User {
     private String userType;
 
     private String userAvatarurl;
+
+    private String userRandnumber;
+
+    private String userPhoneandpasswordandid;
 
     public Integer getUserId() {
         return userId;
@@ -29,6 +35,14 @@ public class User {
 
     public void setUserPhone(String userPhone) {
         this.userPhone = userPhone == null ? null : userPhone.trim();
+    }
+
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword == null ? null : userPassword.trim();
     }
 
     public String getUserName() {
@@ -69,5 +83,21 @@ public class User {
 
     public void setUserAvatarurl(String userAvatarurl) {
         this.userAvatarurl = userAvatarurl == null ? null : userAvatarurl.trim();
+    }
+
+    public String getUserRandnumber() {
+        return userRandnumber;
+    }
+
+    public void setUserRandnumber(String userRandnumber) {
+        this.userRandnumber = userRandnumber == null ? null : userRandnumber.trim();
+    }
+
+    public String getUserPhoneandpasswordandid() {
+        return userPhoneandpasswordandid;
+    }
+
+    public void setUserPhoneandpasswordandid(String userPhoneandpasswordandid) {
+        this.userPhoneandpasswordandid = userPhoneandpasswordandid == null ? null : userPhoneandpasswordandid.trim();
     }
 }
