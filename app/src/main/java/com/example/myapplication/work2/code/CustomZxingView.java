@@ -40,6 +40,7 @@ public class CustomZxingView extends ViewfinderView {
         Rect frame = framingRect;
         Rect previewFrame = previewFramingRect;
 
+
         int width = canvas.getWidth();
         int height = canvas.getHeight();
         //绘制4个角
