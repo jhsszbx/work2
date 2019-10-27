@@ -30,6 +30,7 @@ public class QrCodeActivity extends AppCompatActivity implements View.OnClickLis
     private String userPassword;
     private String userId;
     private String userAccountAndPasswordAndId;
+    private String userType;
 
     private TextView tvRandomCode;
 
@@ -52,10 +53,12 @@ public class QrCodeActivity extends AppCompatActivity implements View.OnClickLis
         userPhone = intent.getStringExtra("userPhone");
         userPassword = intent.getStringExtra("userPassword");
         userId = intent.getStringExtra("userId");
+        userType = intent.getStringExtra("userType");
         Log.e("接收HomeFragment传递来的数据userPhone:", ""+userPhone);
         Log.e("接收HomeFragment传递来的数据userPassword:", ""+userPassword);
         Log.e("接收HomeFragment传递来的数据userId:", ""+userId);
         Log.e("接收HomeFragment传递来的数据:", ""+userAccountAndPasswordAndId);
+        Log.e("接收HomeFragment传递来的数据userType", ""+userType);
 
         // 生成第一张随机二维码的字符串
         // userAccountAndPassword是该用户的账号密码

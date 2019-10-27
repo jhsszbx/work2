@@ -22,6 +22,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     private String userAccount;
     private String userPassword;
     private String userId;
+    private String userType;
 
     private Button btQrCode;
 
@@ -37,16 +38,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        init();
     }
 
-    private void init() {
+    public void init() {
 
         // 接收登录的账号
         userAccount = getArguments().getString("userAccount");
         userPassword = getArguments().getString("userPassword");
         userId = getArguments().getString("userId");
-        Log.e("HomeFragment接收登录的账号:", ""+userAccount + userPassword +userId);
+        userType = getArguments().getString("userType");
+        Log.e("Main接收登录的账号", ""+userAccount + userPassword +userId);
+
 
         btQrCode = getView().findViewById(R.id.home_bt_qrcode);
 
@@ -62,6 +64,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 itQrcode.putExtra("userPassword", userPassword);
                 itQrcode.putExtra("userId", userId);
                 itQrcode.putExtra("userAccountAndPassword", userAccount + userPassword +userId);
+                itQrcode.putExtra("userType", userType);
                 startActivity(itQrcode);
                 break;
         }

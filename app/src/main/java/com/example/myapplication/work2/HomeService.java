@@ -6,6 +6,7 @@ import com.example.myapplication.work2.table.User;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -40,7 +41,18 @@ public interface HomeService {
     @POST("login")
     Call<Boolean> login(@Query("userAccount")String userPhone,@Query("userPassword") String userPassword);
 
+    // 用户登录顺便提交Id
     @GET("getUserId")
     Call<Integer> getUserId(@Query("userPhone")String userPhone,@Query("userPassword") String userPassword);
+
+    @POST("getUserType")
+    Call<User> getUserType(@Query("userPhone")String userPhone, @Query("userPassword") String userPassword);
+
+    // 扫二维码
+    @GET("selectTheUser")
+    Call<Boolean> selectTheUser(@Query("userPhoneAndPasswordAndId")String userPhoneAndPasswordAndId);
+
+    @GET("selectUserType")
+    Call<Integer> selectUserType(@Query("userPhone") String userPhone);
 
 }

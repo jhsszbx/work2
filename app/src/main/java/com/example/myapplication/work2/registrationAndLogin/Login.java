@@ -30,13 +30,14 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private EditText etUserAccount;
     private EditText etUserPassword;
 
-    private String userAccount;
+    private String userPhone;
     private String userPassword;
 
     private Toolbar toolbar;
 
     private Boolean bl;
     private int userId;
+    private String userType;
 
 
     @Override
@@ -71,131 +72,74 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         });
     }
 
-    public void onClick_login(final String userAccount, final String userPassword, final int userId) {
+    public void onClick_getUserId(final String userPhone, final String userPassword) {
         //step1:实例化Retrofit对象
-        final Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(HomeService.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        final Retrofit retrofit = new Retrofit.Builder().baseUrl(HomeService.BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
 
         //step2:获取APIService实例
         HomeService apiService = retrofit.create(HomeService.class);
 
         //step3:通过apiService调用call  http://gank.io/api/data/Android/10/1
-        final Call<Boolean> gankCall= apiService.login(userAccount, userPassword);
-        Log.d("CallGoods",gankCall + "");
-
-
-        //step4:通过异步获取数据
-        gankCall.enqueue(new Callback<Boolean>() {
-            @Override
-            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                Log.e(TAG, "onResponse: 地址请求成功！！！" );
-                // 接收服务端的判断
-                bl = response.body();
-                if (bl == true){
-                    Toast.makeText(Login.this,"登录成功"+bl,Toast.LENGTH_LONG).show();
-                    Intent itLogin = new Intent(Login.this, MainActivity.class);
-
-                    // 使用Bundle传递值
-                    Bundle bundle = new Bundle();
-                    bundle.putString("userId", ""+ userId);
-                    bundle.putString("userAccount", userAccount);
-                    bundle.putString("userPassword", userPassword);
-                    Log.e("使用Bundle传递值userId", ""+userId);
-
-                    Log.e("使用Bundle传递值", ""+userAccount);
-
-                    itLogin.putExtras(bundle);
-
-
-                    startActivity(itLogin);
-                }else {
-                    Toast.makeText(Login.this,"登录失败"+bl,Toast.LENGTH_LONG).show();
-                }
-                Log.e(TAG, "bl 接收服务端的判断 ==" + bl);
-
-
-            }
-
-            @Override
-            public void onFailure(Call<Boolean> call, Throwable t) {
-                Log.e(TAG, "onFailure: 请求失败！！！！~~~~~" );
-                Log.e(TAG, "onFailure: "+t.getMessage() );
-            }
-        });
-
-    }
-
-    public void onClick_getUserId(final String userAccount, final String userPassword) {
-        //step1:实例化Retrofit对象
-        final Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(HomeService.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        //step2:获取APIService实例
-        HomeService apiService = retrofit.create(HomeService.class);
-
-        //step3:通过apiService调用call  http://gank.io/api/data/Android/10/1
-        Call<Integer> gankCall= apiService.getUserId(userAccount, userPassword);
-        Log.d("CallGoods",gankCall + "");
+        Call<Integer> gankCall = apiService.getUserId(userPhone, userPassword);
+        Log.d("CallGoods", gankCall + "");
 
 
         //step4:通过异步获取数据
         gankCall.enqueue(new Callback<Integer>() {
             @Override
             public void onResponse(Call<Integer> call, Response<Integer> response) {
-                Log.e(TAG, "onResponse: 地址请求成功！！！" );
+                Log.e(TAG, "onResponse: 地址请求成功！！！");
                 // 登录接收服务端的id
                 userId = response.body();
-                Log.e("登录接收服务端的id",""+ userId);
-                if (userId != 0){
-                    Toast.makeText(Login.this,"登录成功"+bl,Toast.LENGTH_LONG).show();
+
+                Log.e("登录接收服务端的id", "" + userId);
+                if (userId != 0) {
+                    Toast.makeText(Login.this, "登录成功" + bl, Toast.LENGTH_LONG).show();
                     Intent itLogin = new Intent(Login.this, MainActivity.class);
 
                     // 使用Bundle传递值
                     Bundle bundle = new Bundle();
-                    bundle.putString("userId", ""+ userId);
-                    bundle.putString("userAccount", userAccount);
+                    bundle.putString("userId", "" + userId);
+                    bundle.putString("userPhone", userPhone);
                     bundle.putString("userPassword", userPassword);
-                    Log.e("使用Bundle传递值userId", ""+userId);
+                    Log.e("使用Bundle传递值userId", "" + userId);
 
-                    Log.e("使用Bundle传递值", ""+userAccount);
+                    Log.e("使用Bundle传递值", "" + userPhone);
 
                     itLogin.putExtras(bundle);
 
 
                     startActivity(itLogin);
-                }else {
-                    Toast.makeText(Login.this,"登录失败"+bl,Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(Login.this, "登录失败" + bl, Toast.LENGTH_LONG).show();
                 }
 
             }
 
             @Override
             public void onFailure(Call<Integer> call, Throwable t) {
-                Log.e(TAG, "onFailure: 请求失败！！！！~~~~~" );
-                Log.e(TAG, "onFailure: "+t.getMessage() );
+                Log.e(TAG, "onFailure: 请求失败！！！！~~~~~");
+                Log.e(TAG, "onFailure: " + t.getMessage());
             }
         });
-
 
     }
 
 
+
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.login_btn_next_step:
-                userAccount = etUserAccount.getText().toString();
+                userPhone = etUserAccount.getText().toString();
                 userPassword = etUserPassword.getText().toString();
-                onClick_getUserId(userAccount, userPassword);
+                onClick_getUserId(userPhone, userPassword);
+
                 //onClick_login(userAccount, userPassword, userId);
 
-            break;
+                break;
             default:
-            break;
+                break;
         }
     }
 }
