@@ -1,5 +1,8 @@
 package com.example.myapplication.work2;
 
+import android.app.Activity;
+import android.app.AlarmManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,6 +30,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 import okhttp3.FormBody;
 import okhttp3.ResponseBody;
@@ -66,7 +70,16 @@ public class MainActivity extends AppCompatActivity {
         setListener();
         initFragment();
 
+
     }
+
+    // 默认为中国时区
+//    public static void setChinaTimeZone(Context context) {
+//        TimeZone.getTimeZone("GMT+8");
+//        TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
+//        AlarmManager mAlarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+//        mAlarmManager.setTimeZone("Asia/Shanghai");// Asia/Taipei//GMT+08:00
+//    }
 
     public void setListener() {
         mBottomNavigationView = findViewById(R.id.nav_view);

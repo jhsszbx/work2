@@ -21,6 +21,9 @@ import com.example.myapplication.work2.R;
 import com.example.myapplication.work2.registrationAndLogin.Login;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,7 +44,6 @@ public class ScanningActivity extends AppCompatActivity {
     private DecoratedBarcodeView dbv_custom;
 
     private String userPhoneAndPasswordAndId;
-    private boolean bl;
 
     /**
      * 当前闪光灯是否打开了
@@ -68,7 +70,75 @@ public class ScanningActivity extends AppCompatActivity {
         HomeService apiService = retrofit.create(HomeService.class);
 
         //step3:通过apiService调用call  http://gank.io/api/data/Android/10/1
-        Call<Boolean> gankCall = apiService.selectTheUser(userPhoneAndPasswordAndId);
+        Call<Integer> gankCall = apiService.selectTheUser(userPhoneAndPasswordAndId);
+        Log.d("CallGoods", gankCall + "");
+
+
+        //step4:通过异步获取数据
+        gankCall.enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                Log.e(TAG, "onResponse: 地址请求成功！！！");
+                // 接收服务端的判断是否有这个用户
+                // 扫码接收用户ID
+                int userId = response.body();
+                onClick_addEntryexit(userId);
+
+
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+                Log.e(TAG, "onFailure: 请求失败！！！！~~~~~");
+                Log.e(TAG, "onFailure: " + t.getMessage());
+            }
+        });
+
+    }
+
+
+    public void onClick_addEntryexit(int userId) {
+        //step1:实例化Retrofit对象
+        final Retrofit retrofit = new Retrofit.Builder().baseUrl(HomeService.BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
+
+        //step2:获取APIService实例
+        HomeService apiService = retrofit.create(HomeService.class);
+
+        //step3:通过apiService调用call  http://gank.io/api/data/Android/10/1
+        Call<Integer> gankCall = apiService.addEntryexit(userId);
+        Log.d("CallGoods", gankCall + "");
+
+
+        //step4:通过异步获取数据
+        gankCall.enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                Log.e(TAG, "onResponse: 地址请求成功！！！");
+                // 接收服务端的判断是否有这个用户
+                // 扫码接收用户ID
+                int entryexitId = response.body();
+                onClick_addEntryexitDate(entryexitId);
+
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+                Log.e(TAG, "onFailure: 请求失败！！！！~~~~~");
+                Log.e(TAG, "onFailure: " + t.getMessage());
+            }
+        });
+
+    }
+
+    public void onClick_addEntryexitDate(int entryexitId) {
+        //step1:实例化Retrofit对象
+        final Retrofit retrofit = new Retrofit.Builder().baseUrl(HomeService.BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
+
+        //step2:获取APIService实例
+        HomeService apiService = retrofit.create(HomeService.class);
+
+        //step3:通过apiService调用call  http://gank.io/api/data/Android/10/1
+        Call<Boolean> gankCall = apiService.addEntryexitDate(entryexitId);
         Log.d("CallGoods", gankCall + "");
 
 
@@ -77,14 +147,14 @@ public class ScanningActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 Log.e(TAG, "onResponse: 地址请求成功！！！");
-                // 登录接收服务端的判断是否有这个用户
-                bl = response.body();
-                if (bl == true){
-                    Toast.makeText(ScanningActivity.this, "登录接收服务端的判断是否有这个用户:"+bl, Toast.LENGTH_LONG).show();
+                // 接收服务端的判断是否有这个用户
+                // 扫码接收用户ID
+                Boolean bl = response.body();
+                if (bl=true){
+                    Log.e("出入信息最后一部完成",""+bl);
                 }else {
-                    Toast.makeText(ScanningActivity.this, "登录接收服务端的判断是否有这个用户:"+bl, Toast.LENGTH_LONG).show();
+                    Log.e("出入信息最后一部失败",""+bl);
                 }
-
             }
 
             @Override

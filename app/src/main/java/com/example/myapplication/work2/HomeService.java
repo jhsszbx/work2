@@ -2,8 +2,10 @@ package com.example.myapplication.work2;
 
 
 
+import com.example.myapplication.work2.table.Entryexit;
 import com.example.myapplication.work2.table.User;
 
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -18,19 +20,21 @@ public interface HomeService {
     public static final String BASE_URL = "http://192.168.1.103:8080/door2/";
 
     // 红米wifi用
-    public static final String BASE_URL2 = "http://192.168.43.221:8080/";
+    public static final String BASE_URL2 = "http://192.168.43.221:8080/door2/";
 
     // NVCT
     public static final String BASE_URL3 = "http://172.16.60.33:8080/";
 
     // 409 NCVT
-    public static final String BASE_URL4 = "http://172.16.59.82:8080/door2/";
+    public static final String BASE_URL4 = "http://172.16.52.18:8080/door2/";
 
     @GET("TestSSM/findAllGoods")
     Call<List<User>> getAllGoods();
 
     @GET("TestSSM/findGoodsId")
     Call<User> getGoodsId(@Query("commodityId") int commodityId);
+
+    // 这下面是User的网络请求方法
 
     @GET("addUser")
     Call<User> addUserPhone(String userPhone, String userPassword);
@@ -50,9 +54,29 @@ public interface HomeService {
 
     // 扫二维码
     @GET("selectTheUser")
-    Call<Boolean> selectTheUser(@Query("userPhoneAndPasswordAndId")String userPhoneAndPasswordAndId);
+    Call<Integer> selectTheUser(@Query("userPhoneAndPasswordAndId")String userPhoneAndPasswordAndId);
 
     @GET("selectUserType")
     Call<Integer> selectUserType(@Query("userPhone") String userPhone);
+
+    // 这下面是Entryexit的网络方法
+
+    // 获取进出的信息
+    @GET("selectThreeDayEntryexit")
+    Call<List<Entryexit>> selectThreeDayEntryexit();
+
+    // 重新写的进出信息方法，可以获取到进出时间
+    @GET("selectEntryexitTime")
+    Call<List<Entryexit>> selectEntryexitTime();
+
+    // 扫码过后添加信息到Entryexit，但没有添加扫码时间
+    // 该方法返回是EntryexitId，可根据EntryexitId添加时间
+    @GET("addEntryexit")
+    Call<Integer> addEntryexit(@Query("userId")int userId);
+
+    // 根据上个添加信息的方法，接收entryexitId，添加entryexitDate
+    @GET("addEntryexitDate")
+    Call<Boolean> addEntryexitDate(@Query("entryexitId")int entryexitId);
+
 
 }

@@ -85,4 +85,11 @@ dependencies {
 
     // 图片双指缩放
 //    implementation 'com.github.SuperKotlin:PictureViewer:2.0.1'
+
+    // information
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.47'
+
 }

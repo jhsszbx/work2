@@ -91,7 +91,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 Log.e(TAG, "onResponse: 地址请求成功！！！");
                 // 登录接收服务端的id
                 userId = response.body();
-
                 Log.e("登录接收服务端的id", "" + userId);
                 if (userId != 0) {
                     Toast.makeText(Login.this, "登录成功" + bl, Toast.LENGTH_LONG).show();
