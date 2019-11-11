@@ -2,17 +2,31 @@ package com.example.myapplication.work2;
 
 
 
+import android.database.Observable;
+
 import com.example.myapplication.work2.table.Entryexit;
 import com.example.myapplication.work2.table.User;
+import com.google.gson.JsonObject;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Query;
+
 
 public interface HomeService {
 
@@ -77,6 +91,21 @@ public interface HomeService {
     // 根据上个添加信息的方法，接收entryexitId，添加entryexitDate
     @GET("addEntryexitDate")
     Call<Boolean> addEntryexitDate(@Query("entryexitId")int entryexitId);
+
+    // 显示员工管理
+    @GET("selectStaff")
+    Call<List<User>> selectStaff();
+
+
+
+    // 用户上传头像
+//    @Multipart
+//    @POST("upload")
+//    Call<ResponseBody> uploadImage(@Part("file") RequestBody file, int userId);
+
+    //Post文件提交 ，每个键值对都需要用@Part注解键名字
+    //Multipart 支持文件上传
+
 
 
 }

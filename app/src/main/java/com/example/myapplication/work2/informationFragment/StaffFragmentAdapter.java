@@ -18,8 +18,7 @@ public class StaffFragmentAdapter extends FragmentPagerAdapter {
         }else if(i==1){
             return new ApplyForMessageFragment();
         }else{
-
-            return new StaffmanageFragment();
+            return new StaffManageFragment();
         }
     }
 

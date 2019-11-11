@@ -74,7 +74,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     public void onClick_getUserId(final String userPhone, final String userPassword) {
         //step1:实例化Retrofit对象
-        final Retrofit retrofit = new Retrofit.Builder().baseUrl(HomeService.BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
+        final Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(HomeService.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
         //step2:获取APIService实例
         HomeService apiService = retrofit.create(HomeService.class);

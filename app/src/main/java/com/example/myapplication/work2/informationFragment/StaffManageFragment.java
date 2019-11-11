@@ -12,8 +12,9 @@ import android.view.ViewGroup;
 
 import com.example.myapplication.work2.HomeService;
 import com.example.myapplication.work2.R;
-import com.example.myapplication.work2.recycleView.InOutMessageRecyclerView;
+import com.example.myapplication.work2.recycleView.StaffMessageRecyclerView;
 import com.example.myapplication.work2.table.Entryexit;
+import com.example.myapplication.work2.table.User;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -28,27 +29,23 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /*
-* 出入消息
+* 员工管理
 * */
-public class InOutMessageFragment extends Fragment {
+public class StaffManageFragment extends Fragment {
 
-
-    private final String TAG="InOutMessageFragment";
-
-    private View view;
-    private RefreshLayout refreshLayout;
-
-    private List<Entryexit> entryexits = new ArrayList<>();
-
+    final static private String TAG = "StaffManageFragment";
     //自定义recyclerveiw的适配器
-    private InOutMessageRecyclerView inOutMessageRecycleView;
+    private StaffMessageRecyclerView staffMessageRecyclerView;
+    private RefreshLayout refreshLayout;
+    private View view;
+
+    private List<User> userList = new ArrayList<>();
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_in_out_message, container, false);
-
+        view = inflater.inflate(R.layout.fragment_staff_manage, container, false);
         // 上拉刷新
         shangLaShuaXin();
         return view;
@@ -57,10 +54,9 @@ public class InOutMessageFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        inOutMessageRecycleView = view.findViewById(R.id.inoutmessage_recycleview);
+        staffMessageRecyclerView = view.findViewById(R.id.staffmessage_recycleview);
         // InOutMessageFragment显示进出的人的信息；
-        onClick_selectThreeDayEntryexit();
-
+        onClick_selectStaff();
     }
 
     @Override
@@ -70,13 +66,13 @@ public class InOutMessageFragment extends Fragment {
     }
 
     private void shangLaShuaXin() {
-        refreshLayout = view.findViewById(R.id.inoutmessage_refreshlayout);
+        refreshLayout = view.findViewById(R.id.staffmessage_refreshlayout);
         refreshLayout.setEnableLoadMore(false);//是否启用上拉加载功能
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 // 需要刷新的方法
-                onClick_selectThreeDayEntryexit();
+                onClick_selectStaff();
                 refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
             }
         });
@@ -88,7 +84,8 @@ public class InOutMessageFragment extends Fragment {
         });
     }
 
-    public void onClick_selectThreeDayEntryexit() {
+
+    public void onClick_selectStaff() {
         //step1:实例化Retrofit对象
         final Retrofit retrofit = new Retrofit.Builder().baseUrl(HomeService.BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
 
@@ -96,27 +93,27 @@ public class InOutMessageFragment extends Fragment {
         HomeService apiService = retrofit.create(HomeService.class);
 
         //step3:通过apiService调用call  http://gank.io/api/data/Android/10/1
-        Call<List<Entryexit>> gankCall = apiService.selectEntryexitTime();
+        Call<List<User>> gankCall = apiService.selectStaff();
         Log.d("CallGoods", gankCall + "");
 
         //step4:通过异步获取数据
-        gankCall.enqueue(new Callback<List<Entryexit>>() {
+        gankCall.enqueue(new Callback<List<User>>() {
             @Override
-            public void onResponse(Call<List<Entryexit>> call, Response<List<Entryexit>> response) {
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
                 Log.e(TAG, "onResponse: 地址请求成功！！！");
                 // 接收服务端的判断是否有这个用户
                 // 扫码接收用户ID
-                entryexits = response.body();
-                InoutMessageAdapterAdapter inoutMessageAdapterAdapter = new InoutMessageAdapterAdapter(getContext(), entryexits);
-                StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
-                inOutMessageRecycleView.setLayoutManager(staggeredGridLayoutManager);
-                inOutMessageRecycleView.setAdapter(inoutMessageAdapterAdapter);
+                userList = response.body();
 
+                StaffMessageAdapter staffMessageAdapter = new StaffMessageAdapter(getContext(), userList);
+                StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+                staffMessageRecyclerView.setLayoutManager(staggeredGridLayoutManager);
+                staffMessageRecyclerView.setAdapter(staffMessageAdapter);
 
             }
 
             @Override
-            public void onFailure(Call<List<Entryexit>> call, Throwable t) {
+            public void onFailure(Call<List<User>> call, Throwable t) {
                 Log.e(TAG, "onClick_selectThreeDayEntryexit: 请求失败！！！！~~~~~");
                 Log.e(TAG, "onClick_selectThreeDayEntryexit: " + t.getMessage());
             }

@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
         setListener();
         initFragment();
 
-
     }
 
     // 默认为中国时区
@@ -168,44 +167,10 @@ public class MainActivity extends AppCompatActivity {
                 personFragment.setArguments(bundle);
                 homeFragment.setArguments(bundle);
                 informationFragment.setArguments(bundle);
-                homeFragment.init();
+                homeFragment.initData();
 
                 Log.e("成功从onClick_getUserType接收userType", userType);
 
-
-//                new Thread(new Runnable() {
-//
-//                    @Override
-//                    public void run() {
-//                        Message msg=new Message();
-//                        msg.obj=type;//message的内容
-//                        msg.what=1;//指定message
-//                        handler.post(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                onClick_getUserType(userPhone, userPassword);
-//
-//                            }
-//                        });
-//                        handler.sendMessage(msg);//handler发送message
-//
-//                    }
-//                }).start();
-
-
-                // 登录接收服务端的userType
-//
-//                Log.e("登录接收服务端的userType", type);
-//                try{
-//                    userType = type;
-//                }catch (JsonSyntaxException e) {
-//                    e.printStackTrace();
-//                }
-
-//                Bundle bundle = new Bundle();
-//                Intent intent = new Intent();
-//                intent.putExtra("userType", userType);
-//                intent.putExtras(bundle);
             }
 
             @Override

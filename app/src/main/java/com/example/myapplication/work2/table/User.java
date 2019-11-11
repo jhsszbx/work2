@@ -7,19 +7,21 @@ public class User {
 
     private String userPassword;
 
+    private String userPhoneandpasswordandid;
+
     private String userName;
 
     private String userGender;
+
+    private String userPhonenumber;
 
     private String userEmail;
 
     private String userType;
 
-    private String userAvatarurl;
-
     private String userRandnumber;
 
-    private String userPhoneandpasswordandid;
+    private byte[] userAvatarurl;
 
     public Integer getUserId() {
         return userId;
@@ -45,6 +47,14 @@ public class User {
         this.userPassword = userPassword == null ? null : userPassword.trim();
     }
 
+    public String getUserPhoneandpasswordandid() {
+        return userPhoneandpasswordandid;
+    }
+
+    public void setUserPhoneandpasswordandid(String userPhoneandpasswordandid) {
+        this.userPhoneandpasswordandid = userPhoneandpasswordandid == null ? null : userPhoneandpasswordandid.trim();
+    }
+
     public String getUserName() {
         return userName;
     }
@@ -59,6 +69,14 @@ public class User {
 
     public void setUserGender(String userGender) {
         this.userGender = userGender == null ? null : userGender.trim();
+    }
+
+    public String getUserPhonenumber() {
+        return userPhonenumber;
+    }
+
+    public void setUserPhonenumber(String userPhonenumber) {
+        this.userPhonenumber = userPhonenumber == null ? null : userPhonenumber.trim();
     }
 
     public String getUserEmail() {
@@ -77,14 +95,6 @@ public class User {
         this.userType = userType == null ? null : userType.trim();
     }
 
-    public String getUserAvatarurl() {
-        return userAvatarurl;
-    }
-
-    public void setUserAvatarurl(String userAvatarurl) {
-        this.userAvatarurl = userAvatarurl == null ? null : userAvatarurl.trim();
-    }
-
     public String getUserRandnumber() {
         return userRandnumber;
     }
@@ -93,11 +103,11 @@ public class User {
         this.userRandnumber = userRandnumber == null ? null : userRandnumber.trim();
     }
 
-    public String getUserPhoneandpasswordandid() {
-        return userPhoneandpasswordandid;
+    public byte[] getUserAvatarurl() {
+        return userAvatarurl;
     }
 
-    public void setUserPhoneandpasswordandid(String userPhoneandpasswordandid) {
-        this.userPhoneandpasswordandid = userPhoneandpasswordandid == null ? null : userPhoneandpasswordandid.trim();
+    public void setUserAvatarurl(byte[] userAvatarurl) {
+        this.userAvatarurl = userAvatarurl;
     }
 }

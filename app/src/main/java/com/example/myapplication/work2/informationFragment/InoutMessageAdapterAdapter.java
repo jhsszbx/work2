@@ -44,7 +44,6 @@ public class InoutMessageAdapterAdapter extends InOutMessageRecyclerView.Adapter
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        //�����Զ��岼��
         View view = View.inflate(context, R.layout.inout_message_adapter, null);
         final ViewHolder viewHolder = new ViewHolder(view);
         viewHolder.view.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +58,6 @@ public class InoutMessageAdapterAdapter extends InOutMessageRecyclerView.Adapter
 //                Intent intent = new Intent(InoutMessageAdapterAdapter.this.context, CommodityDetailsActivity.class);
 //                intent.putExtra("commodityId",Entryexit.getEntryexitId());
 //                context.startActivity(intent);
-
             }
         });
         return viewHolder;
